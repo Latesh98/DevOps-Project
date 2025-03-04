@@ -1,0 +1,153 @@
+{% extends "base.html" %}
+
+{% block head %}
+  <style>
+    /* General Animations */
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+      }
+      to {
+        opacity: 1;
+      }
+    }
+
+    /* Apply the fadeIn animation to the entire form */
+    form {
+      animation: fadeIn 1.5s ease-in-out;
+    }
+
+    /* Button Hover Effects */
+    .btn {
+      transition: background-color 0.3s ease, transform 0.3s ease;
+    }
+
+    .btn:hover {
+      background-color: #0056b3;
+      transform: scale(1.1);
+    }
+
+    /* Table Row Hover Animation */
+    .table-hover tbody tr:hover {
+      background-color: #f0f8ff;
+      transform: scale(1.02);
+      transition: all 0.3s ease;
+    }
+
+    /* Image Hover Effect */
+    .img-fluid:hover {
+      transform: scale(1.1);
+      transition: transform 0.3s ease-in-out;
+    }
+
+    /* Input Field Focus Animation */
+    input[type="text"], textarea, input[type="file"] {
+      transition: border 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    input[type="text"]:focus, textarea:focus, input[type="file"]:focus {
+      border: 2px solid #007bff;
+      box-shadow: 0 0 8px rgba(0, 123, 255, 0.5);
+    }
+
+    /* Form and Button Animations */
+    form {
+      animation: fadeIn 1s ease-in-out;
+    }
+
+    button[type="submit"], .btn-primary {
+      transition: transform 0.3s ease, background-color 0.3s ease;
+    }
+
+    button[type="submit"]:hover, .btn-primary:hover {
+      transform: scale(1.05);
+      background-color: #0069d9;
+    }
+
+    /* Table Hover Effects */
+    .table-hover tbody tr {
+      transition: background-color 0.3s ease, transform 0.2s ease;
+    }
+
+    .table-hover tbody tr:hover {
+      background-color: #f8f9fa;
+      transform: translateY(-5px);
+    }
+
+    /* Print Button Hover */
+    .btn-primary.w-20:hover {
+      transform: scale(1.1);
+      background-color: #0056b3;
+    }
+
+    /* Success Alert */
+    script {
+      animation: fadeIn 0.8s ease-in-out;
+    }
+  </style>
+{% endblock %}
+
+{% block start %}
+<form class="p-4 shadow-lg rounded bg-light" style="max-width: 600px; margin: auto;" method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    <h2 class="text-center mb-4">Add a New Recipe</h2>
+    <div class="form-group mb-3">
+      <label for="RecepieName" class="form-label fw-bold">Recipe Name</label>
+      <input required type="text" name="recepie_name" class="form-control" id="RecepieName" placeholder="Enter recipe name">
+    </div>
+    <div class="form-group mb-3">
+      <label for="RecepieDesc" class="form-label fw-bold">Recipe Description</label>
+      <textarea class="form-control" name="recepie_description" id="RecepieDesc" rows="3" placeholder="Enter a short description" required></textarea>
+    </div>
+    <div class="form-group mb-4">
+      <label for="exampleCheck1" class="form-label fw-bold">Add Image</label>
+      <input type="file" name="recepie_img" class="form-control" id="exampleCheck1">
+    </div>
+    <button type="submit" class="btn btn-primary w-100">Submit</button>
+    {% if success %}
+    <script>
+        alert("Recipe Added Successfully");
+    </script>
+    {% endif %}
+</form>
+
+<!-- Search Bar -->
+<form method="get" class="mb-4" style="max-width: 300px; margin: auto;">
+    <input type="text" name="search" class="form-control" placeholder="Search recipes..." value="{{ query }}">
+    <button type="submit" class="btn btn-primary mt-2 w-100">Search</button>
+</form>
+
+<div class="container mt-5">
+    <div class="table-responsive">
+        <table class="table table-hover table-bordered shadow-sm">
+            <thead class="table-dark text-center">
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Recipe Name</th>
+                    <th scope="col">Description</th>
+                    <th scope="col">Image</th>
+                    <th scope="col">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for x in recepies %}
+                <tr class="text-center">
+                    <th scope="row">{{ forloop.counter }}</th>
+                    <td class="fw-bold text-primary">{{ x.recepie_name }}</td>
+                    <td>{{ x.recepie_description }}</td>
+                    <td>
+                        <img src="/media/{{x.recepie_img}}" alt="Image Description" class="img-fluid rounded" style="max-width: 150px; height: auto;">
+                    </td>
+                    <td>
+                        <a href="/delete_recepies/{{x.id}}/" class="btn btn-danger">Delete</a>
+                        <a href="/update_recepies/{{x.id}}/" class="btn btn-success">Update</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <button onclick="window.print()" class="btn btn-primary w-20">Print</button>
+    </div>
+</div>
+
+{% endblock %}

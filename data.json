@@ -1,0 +1,42 @@
+
+{
+    "users": [
+      {
+        "id": 1,
+        "name": "Alice Smith",
+        "email": "alice@example.com",
+        "is_active": true,
+        "roles": ["admin", "editor"],
+        "profile": {
+          "age": 28,
+          "location": "New York",
+          "interests": ["reading", "traveling", "coding"]
+        }
+      },
+      {
+        "id": 2,
+        "name": "Bob Johnson",
+        "email": "bob@example.com",
+        "is_active": false,
+        "roles": ["viewer"],
+        "profile": {
+          "age": 35,
+          "location": "Los Angeles",
+          "interests": ["sports", "movies"]
+        }
+      },
+      {
+        "id": 3,
+        "name": "Charlie Davis",
+        "email": "charlie@example.com",
+        "is_active": true,
+        "roles": ["editor"],
+        "profile": {
+          "age": 42,
+          "location": "Chicago",
+          "interests": ["photography", "music"]
+        }
+      }
+    ]
+  }
+  
